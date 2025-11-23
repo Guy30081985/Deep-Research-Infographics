@@ -1,40 +1,117 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Deep Research Library</title>
+    <title>Guy's Deep Research Library</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
-        body { font-family: sans-serif; max-width: 800px; margin: 40px auto; text-align: center; background: #f4f7f6; }
-        h1 { color: #2c3e50; }
-        .menu-button {
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            text-align: center; 
+            padding: 40px 20px; 
+            background: #f4f7f6; 
+            color: #333;
+        }
+        h1 { color: #2c3e50; margin-bottom: 10px; }
+        p { color: #7f8c8d; margin-bottom: 40px; }
+        
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .btn {
             display: block;
             background: white;
-            color: #333;
+            color: #2c3e50;
             padding: 20px;
-            margin: 15px auto;
-            border-radius: 8px;
             text-decoration: none;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            width: 80%;
+            border-radius: 12px;
+            font-size: 16px;
             font-weight: bold;
-            transition: transform 0.2s;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: transform 0.2s, box-shadow 0.2s;
+            border-left: 5px solid #bdc3c7; /* Default Grey */
         }
-        .menu-button:hover { transform: translateY(-3px); background: #fff; box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
+
+        .btn:hover { 
+            transform: translateY(-5px); 
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1); 
+        }
+
+        /* Status Colors */
+        .live { border-left-color: #2ecc71; } /* Green for Working links */
+        .pending { border-left-color: #e74c3c; opacity: 0.7; } /* Red for Coming Soon */
+
+        .tag {
+            display: block;
+            font-size: 12px;
+            color: #95a5a6;
+            margin-top: 5px;
+            font-weight: normal;
+        }
     </style>
 </head>
 <body>
-    <h1>My Research Dashboard</h1>
-    <p>Select a topic to view the interactive protocol:</p>
-    
-    <a href="MotorLearningOptimization.html" class="menu-button">
-        🧠 Motor Learning Protocol
-    </a>
 
-    <a href="#" class="menu-button" style="opacity: 0.5; cursor: default;">
-        🍕 Pizza Science (Coming Soon)
-    </a>
-    <a href="#" class="menu-button" style="opacity: 0.5; cursor: default;">
-        ☕ Turkish Coffee Physics (Coming Soon)
-    </a>
+    <h1>🧠 Deep Research Dashboard</h1>
+    <p>Interactive Protocols & Visual Summaries</p>
+    
+    <div class="grid-container">
+
+        <a href="MotorLearningOptimization.html" class="btn live">
+            🧠 Motor Learning Protocol
+            <span class="tag">Neuro-Optimization & Practice Schedules</span>
+        </a>
+
+        <a href="#" class="btn pending">
+            🛹 Skateboarding (12-Week Course)
+            <span class="tag">Beginner to Intermediate Progression</span>
+        </a>
+
+        <a href="#" class="btn pending">
+            🍕 South Shore Bar Pizza
+            <span class="tag">Dough Hydration & Baking Steel Physics</span>
+        </a>
+
+        <a href="#" class="btn pending">
+            ☕ Turkish Coffee Science
+            <span class="tag">Extraction Ratios & Heat Management</span>
+        </a>
+
+        <a href="#" class="btn pending">
+            🥊 Muay Thai Training
+            <span class="tag">Thailand Camp Preparation & Conditioning</span>
+        </a>
+
+        <a href="#" class="btn pending">
+            🥖 Home Baking Science
+            <span class="tag">Sourdough, Pitta & High-Temp Ovens</span>
+        </a>
+
+        <a href="#" class="btn pending">
+            🎸 Bass Guitar Maintenance
+            <span class="tag">Setup, Repair & Groove Theory</span>
+        </a>
+
+        <a href="#" class="btn pending">
+            🏠 Smart Home Automation
+            <span class="tag">Google Home Integration & Logic</span>
+        </a>
+
+        <a href="#" class="btn pending">
+            ❤️ Psychology & Relationships
+            <span class="tag">Walkaway Syndrome & Attachment Theory</span>
+        </a>
+        
+        <a href="#" class="btn pending">
+            🧠 Personal Development (Avoro)
+            <span class="tag">ADHD Management & Focus Tools</span>
+        </a>
+
+    </div>
 
 </body>
 </html>
