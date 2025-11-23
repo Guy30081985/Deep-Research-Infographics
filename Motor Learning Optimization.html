@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neuro-Optimized Motor Learning Protocol</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --accent: #e74c3c;
+            --highlight: #3498db;
+            --bg: #f4f7f6;
+            --card-bg: #ffffff;
+            --text: #333;
+            --text-light: #7f8c8d;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg);
+            color: var(--text);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary), #34495e);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        header h1 { margin: 0; font-size: 2.5rem; letter-spacing: 1px; }
+        header p { margin: 10px 0 0; opacity: 0.8; font-size: 1.1rem; }
+
+        /* Navigation */
+        nav {
+            display: flex;
+            justify-content: center;
+            background: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav button {
+            background: none;
+            border: none;
+            padding: 15px 25px;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-light);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+        }
+
+        nav button:hover { color: var(--highlight); background: #f8f9fa; }
+        nav button.active { color: var(--highlight); border-bottom: 3px solid var(--highlight); }
+
+        /* Main Content */
+        main {
+            flex: 1;
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+       .section {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+       .section.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Dashboard Grid */
+       .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+       .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+        }
+
+       .card:hover { transform: translateY(-5px); }
+        
+       .card h3 { 
+            color: var(--primary); 
+            border-bottom: 2px solid #eee; 
+            padding-bottom: 10px; 
+            margin-top: 0;
+        }
+
+       .stat-highlight {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--highlight);
+            margin: 10px 0;
+        }
+
+       .tag {
+            display: inline-block;
+            background: #eee;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        /* Specific Visualizations */
+        
+        /* 1. Practice Schedule */
+       .schedule-visual {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 20px;
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+        }
+       .block-type {
+            text-align: center;
+            padding: 10px;
+            border-radius: 6px;
+            flex: 1;
+            margin: 0 5px;
+            font-weight: bold;
+            color: white;
+        }
+       .blocked-viz.block-type { background-color: #95a5a6; } /* Grey for blocked */
+       .random-viz.block-type:nth-child(1) { background-color: #3498db; }
+       .random-viz.block-type:nth-child(2) { background-color: #e74c3c; }
+       .random-viz.block-type:nth-child(3) { background-color: #2ecc71; }
+        
+       .arrow-right { font-size: 1.5rem; color: #ccc; }
+
+        /* 2. Micro Breaks */
+       .ratio-bar {
+            display: flex;
+            height: 40px;
+            border-radius: 20px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+       .ratio-work { background: var(--accent); width: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; }
+       .ratio-rest { background: var(--highlight); width: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; }
+        
+       .replay-animation {
+            height: 60px;
+            background: #000;
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+            margin-top: 15px;
+        }
+       .replay-dot {
+            width: 10px;
+            height: 10px;
+            background: #0f0;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            animation: replay 0.5s linear infinite; /* 20x speed simulation */
+        }
+        @keyframes replay {
+            0% { left: 0; opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { left: 100%; opacity: 0; }
+        }
+
+        /* 3. Sleep */
+       .sleep-chart {
+            display: flex;
+            align-items: flex-end;
+            height: 150px;
+            gap: 10px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #ccc;
+        }
+       .bar-container { flex: 1; display: flex; flex-direction: column; align-items: center; }
+       .bar { width: 100%; border-radius: 4px 4px 0 0; transition: height 0.5s; position: relative;}
+       .bar-label { margin-top: 5px; font-size: 0.8rem; text-align: center; }
+        
+       .stage-n2 { background: var(--highlight); height: 80%; }
+       .stage-sws { background: #2c3e50; height: 100%; opacity: 0.3; }
+       .stage-rem { background: #e74c3c; height: 60%; opacity: 0.3; }
+
+        /* 4. Habits */
+       .flowchart {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            align-items: center;
+        }
+       .step {
+            background: white;
+            border: 2px solid var(--primary);
+            padding: 15px;
+            border-radius: 8px;
+            width: 80%;
+            text-align: center;
+            position: relative;
+        }
+       .step::after {
+            content: '↓';
+            position: absolute;
+            bottom: -22px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1.2rem;
+            color: var(--primary);
+        }
+       .step:last-child::after { content: none; }
+       .step-highlight { border-color: var(--accent); color: var(--accent); font-weight: bold; }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background: #eee;
+            color: #777;
+            font-size: 0.9rem;
+        }
+
+        /* Utility */
+       .mechanism-box {
+            background: #eef2f5;
+            padding: 10px;
+            border-left: 4px solid var(--highlight);
+            margin-top: 10px;
+            font-size: 0.9rem;
+            font-style: italic;
+        }
+
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Motor Learning Optimization</h1>
+    <p>Neurophysiological Protocols for Elite Performance</p>
+</header>
+
+<nav>
+    <button class="active" onclick="showSection('schedule')">1. Practice Schedule</button>
+    <button onclick="showSection('micro')">2. Micro-Breaks</button>
+    <button onclick="showSection('sleep')">3. Consolidation</button>
+    <button onclick="showSection('error')">4. Error Correction</button>
+    <button onclick="showSection('imagery')">5. Imagery</button>
+</nav>
+
+<main>
+    <div id="schedule" class="section active">
+        <div class="grid">
+            <div class="card">
+                <span class="tag">The Problem</span>
+                <h3>Blocked Practice</h3>
+                <p>Repeating one skill (AAA) creates a <strong>"Fluency Illusion"</strong>. It feels good immediately, but relies on working memory, leading to poor long-term retention.</p>
+                <div class="schedule-visual blocked-viz">
+                    <div class="block-type">Task A</div>
+                    <div class="block-type">Task A</div>
+                    <div class="block-type">Task A</div>
+                </div>
+                <div class="mechanism-box">Brain enters "Zombie Mode" (minimal cognitive load).</div>
+            </div>
+
+            <div class="card">
+                <span class="tag" style="background:var(--highlight); color:white;">The Solution</span>
+                <h3>Contextual Interference</h3>
+                <p>Interleaving tasks (ABC) forces the brain to <strong>reconstruct</strong> the motor plan every rep.</p>
+                <div class="schedule-visual random-viz">
+                    <div class="block-type">Task A</div>
+                    <div class="block-type">Task C</div>
+                    <div class="block-type">Task B</div>
+                </div>
+                <div class="mechanism-box">Mechanism: The Forgetting-Reconstruction Hypothesis. Drives Neural Plasticity.</div>
+            </div>
+
+            <div class="card" style="grid-column: 1 / -1;">
+                <h3>The Challenge Point Matrix</h3>
+                <p>Adjust interference level based on learner expertise.</p>
+                <table style="width:100%; text-align:left; border-collapse: collapse;">
+                    <tr style="border-bottom: 2px solid #eee;">
+                        <th style="padding:10px;">Level</th>
+                        <th>Schedule Type</th>
+                        <th>Interference</th>
+                        <th>Why?</th>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #eee;">
+                        <td style="padding:10px;"><strong>Novice</strong></td>
+                        <td>Blocked / Serial</td>
+                        <td>Low</td>
+                        <td>Needs stability to form basic map.</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #eee;">
+                        <td style="padding:10px;"><strong>Intermediate</strong></td>
+                        <td>Serial (ABC-ABC)</td>
+                        <td>Moderate</td>
+                        <td>Predictable rotation allows reconstruction.</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:10px;"><strong>Elite</strong></td>
+                        <td>Random (ACB-BAC)</td>
+                        <td>High</td>
+                        <td>Requires chaos to refine stable motor plans.</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div id="micro" class="section">
+        <div class="grid">
+            <div class="card">
+                <h3>The 10-Second Rule</h3>
+                <p>Performance improvement happens <strong>during the rest</strong>, not the work. This is the "Micro-Offline Gain".</p>
+                <div class="ratio-bar">
+                    <div class="ratio-work">WORK: 10s</div>
+                    <div class="ratio-rest">REST: 10s</div>
+                </div>
+                <p style="text-align: center; font-size: 0.9rem;">Repeat this cycle. Avoid "Grinding".</p>
+            </div>
+
+            <div class="card">
+                <h3>Mechanism: Neural Replay</h3>
+                <p>During the 10s rest, the Hippocampus & Neocortex replay the sequence at hyper-speed.</p>
+                <div class="stat-highlight">20x Speed</div>
+                <div class="replay-animation">
+                    <div class="replay-dot"></div>
+                </div>
+                <div class="mechanism-box">
+                    <strong>Critical:</strong> Rest must be "Waking Rest". No phone, no talking, no analysis. Just stillness.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="sleep" class="section">
+        <div class="grid">
+            <div class="card">
+                <h3>The Motor Learning Power Nap</h3>
+                <p>Optimal duration to target Stage 2 NREM sleep without hitting Sleep Inertia.</p>
+                <div class="stat-highlight">10 - 20 Min</div>
+                <p>Timing: 6-8 hours after waking (Circadian Dip).</p>
+            </div>
+
+            <div class="card">
+                <h3>Sleep Architecture Target</h3>
+                <div class="sleep-chart">
+                    <div class="bar-container">
+                        <div class="bar stage-n2"></div>
+                        <div class="bar-label"><strong>NREM 2</strong><br>Enhancement<br>(Spindles)</div>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar stage-sws"></div>
+                        <div class="bar-label">NREM 3<br>Stabilization<br>(Deep Sleep)</div>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar stage-rem"></div>
+                        <div class="bar-label">REM<br>Complexity<br>(Dreaming)</div>
+                    </div>
+                </div>
+                <div class="mechanism-box">
+                    <strong>Sleep Spindles (11-16 Hz):</strong> The trigger for synaptic plasticity (LTP) shifting memory from Hippocampus to Cortex.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="error" class="section">
+        <div class="grid">
+            <div class="card" style="grid-column: 1 / -1;">
+                <h3>Protocol: Overwriting Bad Habits</h3>
+                <p>You cannot simply "stop" a bad habit. You must open the <strong>Reconsolidation Window</strong> (lasts 4-6 hours) and overwrite the trace.</p>
+                
+                <div class="flowchart">
+                    <div class="step">
+                        <strong>1. Reactivate (The Old Way)</strong><br>
+                        Deliberately perform the bad habit once. Bring it to consciousness.
+                    </div>
+                    <div class="step step-highlight">
+                        <strong>2. Error Amplification</strong><br>
+                        Exaggerate the mistake massively. Create a "Prediction Error" signal in the brain.
+                    </div>
+                    <div class="step">
+                        <strong>3. The Overwrite (The New Way)</strong><br>
+                        Immediately execute the correct technique. The labile memory trace is updated.
+                    </div>
+                    <div class="step">
+                        <strong>4. Stabilization</strong><br>
+                        Wait/Rest. Do not switch back to the old way.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="imagery" class="section">
+        <div class="grid">
+            <div class="card">
+                <h3>Psychoneuromuscular Theory</h3>
+                <p>Imagining movement creates low-level neuromuscular activity identical to physical performance.</p>
+                <div class="mechanism-box">
+                    <strong>The Carpenter Effect:</strong> Neural pathways are strengthened without physical fatigue.
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3>VMBR Protocol Checklist</h3>
+                <ul style="line-height: 1.8;">
+                    <li><input type="checkbox" checked onclick="return false;"> <strong>Relaxation:</strong> Diaphragmatic breathing to lower noise.</li>
+                    <li><input type="checkbox" checked onclick="return false;"> <strong>Perspective:</strong> INTERNAL (Through your own eyes).</li>
+                    <li><input type="checkbox" checked onclick="return false;"> <strong>Polysensory:</strong> Feel the weight, hear the sound.</li>
+                    <li><input type="checkbox" checked onclick="return false;"> <strong>Speed:</strong> Real-time (not slow motion).</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</main>
+
+<footer>
+    <p>Based on Research: "The Neurophysiology of Elite Motor Acquisition"</p>
+    <p><strong>Note:</strong> This dashboard is a visualization tool for the provided research protocol.</p>
+</footer>
+
+<script>
+    function showSection(sectionId) {
+        // Hide all sections
+        const sections = document.querySelectorAll('.section');
+        sections.forEach(sec => sec.classList.remove('active'));
+
+        // Remove active class from buttons
+        const buttons = document.querySelectorAll('nav button');
+        buttons.forEach(btn => btn.classList.remove('active'));
+
+        // Show selected section
+        document.getElementById(sectionId).classList.add('active');
+        
+        // Highlight button
+        // Find the button that calls this function (simple logic for this demo)
+        const targetBtn = Array.from(buttons).find(b => b.getAttribute('onclick').includes(sectionId));
+        if(targetBtn) targetBtn.classList.add('active');
+    }
+</script>
+
+</body>
+</html>
